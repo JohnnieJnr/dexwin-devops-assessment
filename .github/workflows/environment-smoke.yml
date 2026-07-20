@@ -32,41 +32,8 @@ jobs:
         run: npm test
         working-directory: app
 
-      - name: Build prepared environment image
-        run: docker build --file .devcontainer/Dockerfile .devcontainer
-
-      - name: Install pinned kind
-        env:
-          KIND_VERSION: v0.32.0
-        run: |
-          curl --fail --location --silent --show-error \
-            --output /tmp/kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
-          curl --fail --location --silent --show-error \
-            --output /tmp/kind.sha256sum "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64.sha256sum"
-          kind_checksum="$(cut -d ' ' -f 1 /tmp/kind.sha256sum)"
-          echo "${kind_checksum}  /tmp/kind" | sha256sum --check --status
-          sudo install -m 0755 /tmp/kind /usr/local/bin/kind
-
-      - name: Install pinned kubectl
-        env:
-          KUBECTL_VERSION: v1.36.1
-        run: |
-          curl --fail --location --silent --show-error \
-            --output /tmp/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-          curl --fail --location --silent --show-error \
-            --output /tmp/kubectl.sha256 "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256"
-          echo "$(cat /tmp/kubectl.sha256)  /tmp/kubectl" | sha256sum --check --status
-          sudo install -m 0755 /tmp/kubectl /usr/local/bin/kubectl
-
-      - name: Create assessment environment
-        run: ./scripts/setup.sh
-
-      - name: Confirm assessment resources were applied
-        run: |
-          kubectl get namespace assessment
-          kubectl get deployment customer-api --namespace assessment
-          kubectl get service customer-api --namespace assessment
-
-      - name: Remove disposable cluster
-        if: always()
-        run: ./scripts/reset.sh
+      - name: Build and test the prepared Dev Container
+        uses: devcontainers/ci@v0.3
+        with:
+          push: never
+          runCmd: ./tests/environment-smoke.sh
