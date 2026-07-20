@@ -4,12 +4,8 @@ set -euo pipefail
 cluster_name="dexwin-devops-assessment"
 image_name="customer-api:assessment"
 
-for command in docker kind kubectl; do
-  if ! command -v "${command}" >/dev/null 2>&1; then
-    echo "Missing required command: ${command}" >&2
-    exit 1
-  fi
-done
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"${script_dir}/doctor.sh"
 
 if kind get clusters | grep -qx "${cluster_name}"; then
   echo "Cluster ${cluster_name} already exists; reusing it."

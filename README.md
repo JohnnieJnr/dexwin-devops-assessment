@@ -24,17 +24,41 @@ The Kubernetes incident is open-book. You may use official documentation and ord
 
 Your interviewer may allow AI during the extension task. If so, you remain responsible for reviewing, explaining, and verifying everything it produces.
 
-## Prerequisites
+## Choose your environment
 
-- Docker
-- [`kind`](https://kind.sigs.k8s.io/)
-- `kubectl`
+### GitHub Codespaces (recommended)
+
+[Open the assessment in GitHub Codespaces](https://codespaces.new/dexwin-tech-ltd/dexwin-devops-assessment)
+
+Select the branch supplied by your interviewer. The prepared environment includes Docker, `kind`, `kubectl`, `curl`, Bash, and Terraform. You need only a GitHub account and a browser. When the terminal is ready, confirm the environment:
+
+```bash
+./scripts/doctor.sh
+```
+
+Do not run `setup.sh` until your interviewer starts the assessment.
+
+### Local environment
+
+Run the assessment locally if you prefer. You need:
+
+- Docker with the daemon running
+- [`kind` v0.32.0](https://kind.sigs.k8s.io/)
+- `kubectl` v1.36.x
 - `curl`
-- Bash
+- Bash 4 or later recommended
 
 Optional for the extension:
 
 - Terraform 1.6 or later
+
+Check the complete local environment before the interview:
+
+```bash
+./scripts/doctor.sh
+```
+
+The doctor does not install software or change your machine. It reports missing tools, an unavailable Docker daemon, a stale assessment cluster, and a conflicting verification port, with remediation guidance.
 
 ## Start the environment
 
@@ -65,6 +89,7 @@ The initial verification is expected to fail. Do not modify the application mere
 | `app/` | Small Node.js API and its container image. |
 | `kubernetes/` | Namespace, configuration, Deployment, and Service. |
 | `scripts/` | Environment setup, status, verification, and reset helpers. |
+| `.devcontainer/` | Reproducible Codespaces and Dev Container tooling. |
 | `extensions/terraform/` | Optional infrastructure-as-code extension. |
 | `.github/workflows/release.yml` | Optional CI/CD extension. |
 
