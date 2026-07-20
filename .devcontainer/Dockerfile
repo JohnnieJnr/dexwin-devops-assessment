@@ -19,7 +19,8 @@ RUN architecture="$(dpkg --print-architecture)" \
          --output /tmp/kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-${binary_architecture}" \
     && curl --fail --location --silent --show-error \
          --output /tmp/kind.sha256sum "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-${binary_architecture}.sha256sum" \
-    && echo "$(cat /tmp/kind.sha256sum)  /tmp/kind" | sha256sum --check --status \
+    && kind_checksum="$(cut -d ' ' -f 1 /tmp/kind.sha256sum)" \
+    && echo "${kind_checksum}  /tmp/kind" | sha256sum --check --status \
     && install -m 0755 /tmp/kind /usr/local/bin/kind \
     && curl --fail --location --silent --show-error \
          --output /tmp/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${binary_architecture}/kubectl" \

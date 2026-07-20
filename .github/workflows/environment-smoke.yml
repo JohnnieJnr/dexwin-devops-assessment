@@ -43,7 +43,8 @@ jobs:
             --output /tmp/kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
           curl --fail --location --silent --show-error \
             --output /tmp/kind.sha256sum "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64.sha256sum"
-          echo "$(cat /tmp/kind.sha256sum)  /tmp/kind" | sha256sum --check --status
+          kind_checksum="$(cut -d ' ' -f 1 /tmp/kind.sha256sum)"
+          echo "${kind_checksum}  /tmp/kind" | sha256sum --check --status
           sudo install -m 0755 /tmp/kind /usr/local/bin/kind
 
       - name: Install pinned kubectl
