@@ -100,6 +100,8 @@ Assess the accessibility of the service to the open web, and recommend your chan
 
 Your interviewer will ask you to choose one option.
 
+---
+
 ### Terraform
 
 Improve `extensions/terraform` so that it:
@@ -109,6 +111,8 @@ Improve `extensions/terraform` so that it:
 - Includes a meaningful Terraform test or check.
 
 Be prepared to explain state, secrets, plan review, deployment, and rollback. Do not create paid or remote infrastructure.
+
+---
 
 ### CI/CD
 
