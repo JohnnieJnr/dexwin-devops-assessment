@@ -15,7 +15,11 @@ fi
 
 docker build --tag "${image_name}" ./app
 kind load docker-image "${image_name}" --name "${cluster_name}"
-kubectl apply -f kubernetes/
+kubectl apply -f kubernetes/namespace.yaml
+kubectl apply \
+  -f kubernetes/configmap.yaml \
+  -f kubernetes/deployment.yaml \
+  -f kubernetes/service.yaml
 
 echo
 echo "Assessment environment applied. The starting deployment is intentionally unhealthy."
