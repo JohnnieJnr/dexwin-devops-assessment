@@ -95,6 +95,9 @@ The initial verification is expected to fail. Do not modify the application mere
 
 ## Extension
 
+### Reverse Proxy
+Assess the accessibility of the service to the open web, and recommend your changes based on best practice.
+
 Your interviewer will ask you to choose one option.
 
 ### Terraform
