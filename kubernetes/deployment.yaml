@@ -28,11 +28,11 @@ spec:
               path: /ready
               port: http
             periodSeconds: 3
-            failureThreshold: 2
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 2
+            initialDelaySeconds: 200
             periodSeconds: 2
-            failureThreshold: 3
+            failureThreshold: 5
