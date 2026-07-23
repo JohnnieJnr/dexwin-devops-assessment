@@ -25,7 +25,7 @@ spec:
               containerPort: 8080
           readinessProbe:
             httpGet:
-              path: /ready
+              path: /readyz
               port: http
             periodSeconds: 3
             failureThreshold: 5
